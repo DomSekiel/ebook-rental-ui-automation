@@ -39,6 +39,12 @@ public class LoginPage extends BasePage {
         wait.until(
                 ExpectedConditions.urlContains("/register"));
 
+        wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        repeatPasswordInput
+                )
+        );
+
         type(loginInput, login);
         type(passwordInput, password);
         type(repeatPasswordInput, password);
