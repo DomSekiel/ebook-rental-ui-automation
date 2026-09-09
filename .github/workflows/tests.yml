@@ -34,6 +34,8 @@ jobs:
           empty.password=
           timeout.seconds=60
           short.timeout.seconds=5
+          browser=chrome
+          headless=true
           EOF
 
       - name: Run tests
