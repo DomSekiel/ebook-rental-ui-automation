@@ -4,5 +4,3 @@ short.timeout.seconds=5
 valid.login=your_login
 valid.password=your_password
 invalid.password=wrongpassword
-empty.login=
-empty.password=

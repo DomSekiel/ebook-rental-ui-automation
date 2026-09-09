@@ -2,13 +2,8 @@ package pages;
 
 import base.BasePage;
 import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.ConfigReader;
-
-import java.time.Duration;
+import org.openqa.selenium.support.ui.ExpectedConditions;;
 
 public class LoginPage extends BasePage {
 
@@ -69,30 +64,5 @@ public class LoginPage extends BasePage {
         return wait.until(
                 ExpectedConditions.visibilityOfElementLocated(errorMessage)
         ).getText();
-    }
-
-    public boolean isTitlesPageDisplayed() {
-
-        try {
-
-            new WebDriverWait(
-                    driver,
-                    Duration.ofSeconds(
-                            ConfigReader.getIntProperty(
-                                    "short.timeout.seconds"
-                            )
-                    )
-            ).until(
-                    ExpectedConditions.visibilityOfElementLocated(
-                            titlesHeader
-                    )
-            );
-
-            return true;
-
-        } catch (TimeoutException e) {
-
-            return false;
-        }
     }
 }

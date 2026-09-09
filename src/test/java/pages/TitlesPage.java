@@ -9,14 +9,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.ConfigReader;
 
 import java.time.Duration;
 
 public class TitlesPage extends BasePage {
-
-    private static final int SHORT_TIMEOUT =
-            ConfigReader.getIntProperty("short.timeout.seconds");
 
     private final By addNewButton = By.id("add-title-button");
     private final By titleInput = By.name("title");
@@ -39,9 +35,9 @@ public class TitlesPage extends BasePage {
                     Duration.ofSeconds(SHORT_TIMEOUT)
             ).until(
                     ExpectedConditions.refreshed(
-                        ExpectedConditions.visibilityOfElementLocated(
-                            addNewButton
-                        )
+                            ExpectedConditions.visibilityOfElementLocated(
+                                    addNewButton
+                            )
                     )
             );
 
@@ -196,11 +192,5 @@ public class TitlesPage extends BasePage {
         wait.until(
                 ExpectedConditions.urlContains("/items/")
         );
-    }
-
-    public boolean isItemsPageDisplayed() {
-
-        return driver.getCurrentUrl()
-                .contains("/items/");
     }
 }

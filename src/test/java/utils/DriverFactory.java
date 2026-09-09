@@ -4,27 +4,52 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class DriverFactory {
 
-    public static WebDriver createDriver(boolean headless) {
+    public static WebDriver createDriver(String browser, boolean headless) {
 
-        WebDriverManager.chromedriver().setup();
+        switch (browser.toLowerCase()) {
 
-        ChromeOptions options = new ChromeOptions();
+            case "chrome":
 
-        if (headless) {
+                WebDriverManager.chromedriver().setup();
 
-            options.addArguments("--headless=new");
-            options.addArguments("--window-size=1920,1080");
+                ChromeOptions chromeOptions = new ChromeOptions();
 
-        } else {
+                if (headless) {
 
-            options.addArguments("--start-maximized");
+                    chromeOptions.addArguments("--headless=new");
+                    chromeOptions.addArguments("--window-size=1920,1080");
+
+                } else {
+
+                    chromeOptions.addArguments("--start-maximized");
+                }
+
+                chromeOptions.addArguments("--disable-notifications");
+
+                return new ChromeDriver(chromeOptions);
+
+            case "firefox":
+
+                WebDriverManager.firefoxdriver().setup();
+
+                FirefoxOptions firefoxOptions = new FirefoxOptions();
+
+                if (headless) {
+
+                    firefoxOptions.addArguments("-headless");
+                }
+
+                return new FirefoxDriver(firefoxOptions);
+
+            default:
+
+                throw new IllegalArgumentException(
+                        "Browser not recognised: " + browser);
         }
-
-        options.addArguments("--disable-notifications");
-
-        return new ChromeDriver(options);
     }
 }

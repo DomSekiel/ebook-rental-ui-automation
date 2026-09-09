@@ -3,6 +3,7 @@ package tests;
 import base.BaseTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.ItemsPage;
 import pages.LoginPage;
@@ -51,6 +52,7 @@ public class RentsTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should add rent")
     void shouldAddRent() {      // TC #19 Dodanie wypożyczenia
 
         int before =
@@ -64,6 +66,7 @@ public class RentsTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should validate empty rent form")
     void shouldValidateEmptyRentForm() {        // TC #20 Walidacja pustych danych
 
         rentsPage.openAddRentForm();
@@ -76,9 +79,8 @@ public class RentsTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should edit rent")
     void shouldEditRent() {     // TC #21 Edycja wypożyczenia
-
-        //RentsPage rentsPage = new RentsPage(driver);
 
         rentsPage.addRent("Brad Pitt with Jennifer");
 
@@ -96,8 +98,9 @@ public class RentsTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should not rent already rented item")
     @Disabled("BUG TC#22: aplikacja pozwala ponownie wypożyczyć ten sam egzemplarz")
-    void sholudNotRentAlreadyRentedItem ()  {
+    void shouldNotRentAlreadyRentedItem ()  {
 
         rentsPage.addRent("Matt Damon");
 
@@ -111,6 +114,7 @@ public class RentsTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should remove rent")
     void shouldRemoveRent() {       // TC #23 Usunięcie wypożyczenia
 
         rentsPage.addRent("George Clooney");
@@ -124,6 +128,7 @@ public class RentsTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should change item status after rent")
     @Disabled("BUG TC#24: status egzemplarza pozostaje Available po wypożyczeniu")
     void shouldChangeItemStatusAfterRent()  {
 

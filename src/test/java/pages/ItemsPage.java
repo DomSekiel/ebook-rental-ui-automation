@@ -8,15 +8,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.ConfigReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.time.Duration;
 import java.util.List;
 
 public class ItemsPage extends BasePage {
 
-    private static final int SHORT_TIMEOUT =
-            ConfigReader.getIntProperty("short.timeout.seconds");
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemsPage.class);
 
     private final By addButton = By.id("add-item-button");
     private final By purchaseDate = By.name("purchase-date");
@@ -205,7 +205,7 @@ public class ItemsPage extends BasePage {
         WebElement button =
                 item.findElement(removeButton);
 
-        System.out.println("Removing item id: " + itemId);
+        LOGGER.info("Removing item id: {}", itemId);
 
         wait.until(
                 ExpectedConditions.elementToBeClickable(button)
@@ -262,5 +262,24 @@ public class ItemsPage extends BasePage {
         return item.findElement(
                 By.cssSelector(".items-list__item__status")
         ).getText();
+    }
+
+    public boolean isItemsPageDisplayed() {
+
+        try {
+            new WebDriverWait(
+                    driver,
+                    Duration.ofSeconds(SHORT_TIMEOUT)
+            ).until(
+                    ExpectedConditions.visibilityOfElementLocated(addButton
+                    )
+            );
+
+            return true;
+
+        }   catch (TimeoutException e) {
+
+            return false;
+        }
     }
 }

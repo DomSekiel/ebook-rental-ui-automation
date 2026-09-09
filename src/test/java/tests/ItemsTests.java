@@ -2,7 +2,10 @@ package tests;
 
 import base.BaseTest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pages.ItemsPage;
 import pages.LoginPage;
 import pages.TitlesPage;
@@ -12,6 +15,8 @@ import utils.TestDataGenerator;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ItemsTests extends BaseTest {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ItemsTests.class);
 
     @BeforeEach
     void loginAndOpenItemsPage() {
@@ -27,20 +32,21 @@ public class ItemsTests extends BaseTest {
         TitlesPage titlesPage =
                 new TitlesPage(driver);
 
-//        titlesPage.clickShowCopiesForFirstTitle();
-
         String title = TestDataGenerator.generateTitle();
 
         titlesPage.addTitle(title, TestDataGenerator.generateAuthor(), TestDataGenerator.getDefaultYear());
 
         titlesPage.openItemsForTitle(title);
 
+        ItemsPage itemsPage = new ItemsPage(driver);
+
         assertThat(
-                titlesPage.isItemsPageDisplayed()
+                itemsPage.isItemsPageDisplayed()
         ).isTrue();
     }
 
     @Test
+    @DisplayName("Should add item")
     void shouldAddItem() {      // TC #15 Dodanie egzemplarza
 
         ItemsPage itemsPage =
@@ -54,6 +60,7 @@ public class ItemsTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("Should edit item")
     void shouldEditItem() {     // TC #16 Edycja egzemplarza
 
         ItemsPage itemsPage =
@@ -74,6 +81,7 @@ public class ItemsTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should remove selected item")
     void shouldRemoveSelectedItem() {       // TC #17 Usunięcie egzemplarza
 
         ItemsPage itemsPage = new ItemsPage(driver);
@@ -84,7 +92,7 @@ public class ItemsTests extends BaseTest {
 
         String itemIdToRemove = itemsPage.getLastItemId();
 
-        System.out.println("Item selected to remove: " + itemIdToRemove);
+        LOGGER.info("Item selected to remove: {}", itemIdToRemove);
 
         itemsPage.removeItemById(itemIdToRemove);
 
@@ -98,6 +106,7 @@ public class ItemsTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should navigate to rents page")
     void shouldNavigateToRentsPage() {      // TC #18 Przejście do listy wypożyczeń
 
         ItemsPage itemsPage =

@@ -18,7 +18,7 @@ public class BasePage {
     protected final WebDriver driver;
     protected final WebDriverWait wait;
 
-    private static final int SHORT_TIMEOUT =
+    protected static final int SHORT_TIMEOUT =
             ConfigReader.getIntProperty("short.timeout.seconds");
 
     private final By loadingOverlay =

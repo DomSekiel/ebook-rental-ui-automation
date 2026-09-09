@@ -13,9 +13,22 @@ public class BaseTest {
     @BeforeEach
     void setUp() {
 
-        driver = DriverFactory.createDriver(true);
+        String browser =
+                ConfigReader.getProperty("browser");
 
-        driver.get(ConfigReader.getProperty("base.url"));
+        boolean headless =
+                Boolean.parseBoolean(
+                        ConfigReader.getProperty("headless")
+                );
+
+        driver = DriverFactory.createDriver(
+                browser,
+                headless
+        );
+
+        driver.get(
+                ConfigReader.getProperty("base.url")
+        );
     }
 
     @AfterEach

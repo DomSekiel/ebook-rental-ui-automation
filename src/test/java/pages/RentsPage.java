@@ -3,6 +3,7 @@ package pages;
 import base.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class RentsPage extends BasePage {
@@ -64,23 +65,36 @@ public class RentsPage extends BasePage {
 
         waitForLoaderToDisappear();
 
-        return driver.findElements(customerNames)
-                .get(0)
-                .getText();
+        WebElement firstCustomerName =
+                wait.until(ExpectedConditions.visibilityOfElementLocated(
+                        customerNames));
+
+        return firstCustomerName.getText();
     }
 
     public void editFirstRent(String newCustomerName) {
 
         waitForLoaderToDisappear();
 
-        click(editButton);
+        WebElement firstRent =
+                wait.until(
+                    ExpectedConditions.visibilityOfElementLocated(rents)
+        );
+
+        WebElement firstEditButton = firstRent.findElement(editButton);
 
         wait.until(
-                ExpectedConditions.visibilityOfElementLocated(customerNameInput)
-        ).clear();
+                ExpectedConditions.elementToBeClickable(firstEditButton)
+            ).click();
 
-        driver.findElement(customerNameInput)
-                .sendKeys(newCustomerName);
+        WebElement customerNameField =
+                wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(
+                                customerNameInput)
+                    );
+
+        customerNameField.clear();
+        customerNameField.sendKeys(newCustomerName);
 
         click(submitButton);
 
@@ -91,8 +105,27 @@ public class RentsPage extends BasePage {
 
         waitForLoaderToDisappear();
 
-        click(removeButton);
+        WebElement firstRent =
+                wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(
+                                rents
+                        )
+                );
 
-        waitForLoaderToDisappear();
+        WebElement firstRemoveButton =
+                firstRent.findElement(removeButton);
+
+        wait.until(
+                ExpectedConditions.elementToBeClickable(
+                        firstRemoveButton
+                )
+
+        ).click();
+
+        wait.until(
+                ExpectedConditions.stalenessOf(
+                        firstRent
+                )
+        );
     }
 }

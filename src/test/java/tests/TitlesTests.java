@@ -2,6 +2,7 @@ package tests;
 
 import base.BaseTest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.ItemsPage;
 import pages.LoginPage;
@@ -29,6 +30,7 @@ public class TitlesTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should display titles page")
     void shouldDisplayTitlesPage() {     // TC #6 Wyświetlenie listy tytułów
 
         assertThat(
@@ -37,6 +39,7 @@ public class TitlesTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should add new title")
     void shouldAddNewTitle() {       // TC #7 Dodanie nowego tytułu
 
         String title =
@@ -54,6 +57,7 @@ public class TitlesTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should not add empty title")
     void shouldNotAddEmptyTitle() {      // TC #8 Walidacja pustego formularza
 
         titlesPage.submitEmptyTitleForm();
@@ -64,6 +68,7 @@ public class TitlesTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should edit title")
     void shouldEditTitle() {     // TC #9 Edycja tytułu
 
         String oldTitle =
@@ -89,6 +94,7 @@ public class TitlesTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should remove title")
     void shouldRemoveTitle() {      // TC #10 Usunięcie tytułu
 
         String title =
@@ -108,6 +114,7 @@ public class TitlesTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should navigate to items page")
     void shouldNavigateToItemsPage() {      // TC #11 Przejście do listy egzemplarzy
 
         String title =
@@ -121,12 +128,15 @@ public class TitlesTests extends BaseTest {
 
         titlesPage.openItemsForTitle(title);
 
+        ItemsPage itemsPage = new ItemsPage(driver);
+
         assertThat(
-                titlesPage.isItemsPageDisplayed()
+                itemsPage.isItemsPageDisplayed()
         ).isTrue();
     }
 
     @Test
+    @DisplayName("should keep empty form opened")
     void shouldKeepEmptyFormOpened() {      // TC #12 Blokada zapisu pustego formularza
 
         titlesPage.submitEmptyTitleForm();
@@ -137,6 +147,7 @@ public class TitlesTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should keep title after relogin")
     void shouldKeepTitleAfterRelogin() {        // #13.1 Zachowanie tytułu po ponownym zalogowaniu
 
         TitlesPage titlesPage = new TitlesPage(driver);
@@ -166,6 +177,7 @@ public class TitlesTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should redirect to login after refresh")
     void shouldRedirectToLoginAfterRefresh() {      // #13.2 Przekierowanie do ekranu logowania po odświeżeniu strony
 
         driver.navigate().refresh();
@@ -176,6 +188,7 @@ public class TitlesTests extends BaseTest {
     }
 
     @Test
+    @DisplayName("should not remove title with copies")
     void shouldNotRemoveTitleWithCopies() {     // TC #14 Usunięcie tytułu posiadającego egzemplarze
 
         String title = TestDataGenerator.generateTitle();
