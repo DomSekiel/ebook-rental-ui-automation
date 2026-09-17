@@ -26,6 +26,20 @@ public class TitlesPage extends BasePage {
         super(driver);
     }
 
+    private static String escapeXPath(String value) {
+        if (!value.contains("'")) {
+            return "'" + value + "'";
+        }
+
+        if (!value.contains("\""))  {
+            return "\"" + value + "\"";
+        }
+
+        return "concat('" +
+                String.join("', \"'\", '", value.split("'", -1)) +
+                "')";
+    }
+
     public boolean isTitlesPageDisplayed() {
 
         try {
@@ -86,7 +100,7 @@ public class TitlesPage extends BasePage {
     public boolean isTitleVisible(String title) {
 
         By titleElement =
-                By.xpath("//li[contains(.,'" + title + "')]");
+                By.xpath("//li[contains(.," + escapeXPath(title) + ")]");
 
         try {
 
@@ -105,7 +119,7 @@ public class TitlesPage extends BasePage {
 
     public void editTitle(String oldTitle, String newTitle) {
 
-        By editButton = By.xpath("//li[contains(.,'" + oldTitle + "')]//button[contains(@class,'edit-btn')]");
+        By editButton = By.xpath("//li[contains(.," + escapeXPath(oldTitle) + ")]//button[contains(@class,'edit-btn')]");
 
         click(editButton);
 
@@ -127,14 +141,15 @@ public class TitlesPage extends BasePage {
 
     public void removeTitle(String title) {
 
-        By removeButton = By.xpath("//li[contains(.,'" + title + "')]//button[contains(@class,'remove-btn')]");
+        By removeButton = By.xpath(
+                "//li[contains(.," + escapeXPath(title) + ")]//button[contains(@class,'remove-btn')]");
 
         click(removeButton);
 
         wait.until(
                 ExpectedConditions.invisibilityOfElementLocated(
                         By.xpath(
-                                "//li[contains(.,'" + title + "')]"
+                                "//li[contains(.," + escapeXPath(title) + ")]"
                         )
                 )
         );
@@ -142,7 +157,7 @@ public class TitlesPage extends BasePage {
 
     public void clickRemoveTitle(String title) {
 
-        By removeButton = By.xpath("//li[contains(.,'" + title + "')]//button[contains(@class,'remove-btn')]");
+        By removeButton = By.xpath("//li[contains(.," + escapeXPath(title) + ")]//button[contains(@class,'remove-btn')]");
 
         click(removeButton);
     }
@@ -184,7 +199,7 @@ public class TitlesPage extends BasePage {
 
         By titleLink =
                 By.xpath(
-                        "//li[contains(.,'" + title + "')]//a[contains(@href,'/items/')]"
+                        "//li[contains(.," + escapeXPath(title) + ")]//a[contains(@href,'/items/')]"
                 );
 
         click(titleLink);
